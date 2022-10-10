@@ -10,3 +10,4 @@ trim_trailing_whitespace = true
 [{*.js,*.mjs,*.ts,*.json,*.yml}]
 indent_size = 2
 indent_style = space
+quote_type = single

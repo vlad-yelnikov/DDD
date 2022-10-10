@@ -12,6 +12,7 @@ const scaffold = (structure) => {
     for (const methodName of methods) {
       api[serviceName][methodName] = (...args) => new Promise((resolve) => {
         const packet = { name: serviceName, method: methodName, args };
+        console.log(packet);
         socket.send(JSON.stringify(packet));
         socket.onmessage = (event) => {
           const data = JSON.parse(event.data);

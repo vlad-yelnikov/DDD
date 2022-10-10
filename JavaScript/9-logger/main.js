@@ -1,8 +1,9 @@
 'use strict';
 
-const fsp = require('node:fs').promises;
+const fsp = require('node:fs/promises');
 const path = require('node:path');
-const server = require('./ws.js');
+const { STATIC_PORT, API_PORT, TRANSPORT } = require('./config.js');
+const server = require(`./${TRANSPORT}.js`);
 const staticServer = require('./static.js');
 const load = require('./load.js');
 const db = require('./db.js');
@@ -26,6 +27,6 @@ const routing = {};
     routing[serviceName] = await load(filePath, sandbox);
   }
 
-  staticServer('./static', 8000);
-  server(routing, 8001);
+  staticServer('./static', STATIC_PORT);
+  server(routing, API_PORT);
 })();
