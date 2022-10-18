@@ -17,7 +17,7 @@ module.exports = (routing, port) => {
       if (!handler) return connection.send('"Not found"', { binary: false });
       const json = JSON.stringify(args);
       const parameters = json.substring(1, json.length - 1);
-      console.log(`${ip} ${name}.${method}(${parameters})`);
+      // console.log(`${ip} ${name}.${method}(${parameters})`);
       try {
         const result = await handler(...args);
         connection.send(JSON.stringify(result.rows), { binary: false });
@@ -28,5 +28,5 @@ module.exports = (routing, port) => {
     });
   });
 
-  console.log(`API on port ${port}`);
+  // console.log(`API on port ${port}`);
 };

@@ -17,5 +17,5 @@ module.exports = (root, port) => {
     }
   }).listen(port);
 
-  console.log(`Static on port ${port}`);
+  // console.log(`Static on port ${port}`);
 };

@@ -32,7 +32,7 @@ class Logger {
     const date = now.substring(0, DATETIME_LENGTH);
     const color = COLORS[type];
     const line = date + '\t' + s;
-    console.log(color + line + '\x1b[0m');
+    // console.log(color + line + '\x1b[0m');
     const out = line.replace(/[\n\r]\s*/g, '; ') + '\n';
     this.stream.write(out);
   }

@@ -23,6 +23,7 @@ module.exports = (table) => ({
   },
 
   read(id, fields = ['*']) {
+    // console.log(id, fields);
     const names = fields.join(', ');
     const sql = `SELECT ${names} FROM ${table}`;
     if (!id) return pool.query(sql);

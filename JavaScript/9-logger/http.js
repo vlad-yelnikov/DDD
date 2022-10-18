@@ -5,6 +5,8 @@ const http = require('node:http');
 const receiveArgs = async (req) => {
   const buffers = [];
   for await (const chunk of req) buffers.push(chunk);
+  // console.log(req);
+  // console.log('buffers', buffers);
   const data = Buffer.concat(buffers).toString();
   return JSON.parse(data);
 };
@@ -12,6 +14,8 @@ const receiveArgs = async (req) => {
 module.exports = (routing, port) => {
   http.createServer(async (req, res) => {
     const { url, socket } = req;
+    // console.log('body', req.body);
+    console.log(req.method);
     const [name, method, id] = url.substring(1).split('/');
     const entity = routing[name];
     if (!entity) return res.end('Not found');
@@ -22,10 +26,13 @@ module.exports = (routing, port) => {
     const args = [];
     if (signature.includes('(id')) args.push(id);
     if (signature.includes('{')) args.push(await receiveArgs(req));
-    console.log(`${socket.remoteAddress} ${method} ${url}`);
+    // console.log(`${socket.remoteAddress} ${method} ${url}`);
     const result = await handler(...args);
-    res.end(JSON.stringify(result.rows));
+    res
+      .setHeader('Access-Control-Allow-Headers', 'Content-Type')
+      .setHeader('Access-Control-Allow-Origin', '*')
+      .end(JSON.stringify(result.rows));
   }).listen(port);
 
-  console.log(`API on port ${port}`);
+  // console.log(`API on port ${port}`);
 };
